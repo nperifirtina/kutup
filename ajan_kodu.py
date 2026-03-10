@@ -30,12 +30,16 @@ def cdse_token_al():
 
 def yeni_goruntu_ara(token, hedef_alan, buzul_adi):
     bugun = datetime.utcnow()
-    uc_gun_once = bugun - timedelta(days=3)
-    tarih_filtresi = f"ContentDate/Start gt {uc_gun_once.strftime('%Y-%m-%dT%H:%M:%S.000Z')}"
+    
+    # DEĞİŞİKLİK 1: 3 gün yerine son 60 güne (yaz aylarına) bakıyoruz
+    gecmis_zaman = bugun - timedelta(days=60)
+    tarih_filtresi = f"ContentDate/Start gt {gecmis_zaman.strftime('%Y-%m-%dT%H:%M:%S.000Z')}"
     
     url = "https://catalogue.dataspace.copernicus.eu/odata/v1/Products"
+    
+    # DEĞİŞİKLİK 2: Bulutluluk sınırını %20'den %60'a (Value lt 60.0) çıkardık
     sorgu_parametreleri = {
-        "$filter": f"Collection/Name eq 'SENTINEL-2' and OData.CSC.Intersects(area=geography'SRID=4326;{hedef_alan}') and Attributes/OData.CSC.DoubleAttribute/any(att:att/Name eq 'cloudCover' and att/OData.CSC.DoubleAttribute/Value lt 20.0) and {tarih_filtresi}",
+        "$filter": f"Collection/Name eq 'SENTINEL-2' and OData.CSC.Intersects(area=geography'SRID=4326;{hedef_alan}') and Attributes/OData.CSC.DoubleAttribute/any(att:att/Name eq 'cloudCover' and att/OData.CSC.DoubleAttribute/Value lt 60.0) and {tarih_filtresi}",
         "$top": 1,
         "$orderby": "ContentDate/Start desc"
     }
@@ -48,7 +52,7 @@ def yeni_goruntu_ara(token, hedef_alan, buzul_adi):
         urun = veriler["value"][0]
         return f"✅ Yeni Veri Bulundu (Tarih: {urun['ContentDate']['Start'][:10]})"
     else:
-        return "☁️ Son 3 günde bulutsuz veri bulunamadı. Önceki analiz geçerli."
+        return "☁️ Son 60 günde %60 bulut altı veri bulunamadı. Önceki analiz geçerli."
 
 def resim_analiz_et(resim_yolu, dosya_adi, baslik):
     img = cv2.imread(resim_yolu)
