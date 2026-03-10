@@ -3,23 +3,46 @@
     <html lang="tr">
     <head>
         <meta charset="UTF-8">
-        <title>Antarktika Buzul İzleme İstasyonu</title>
+        <title>Antarktika Kritik Buzullar Otonom İzleme İstasyonu</title>
         <style>
-            body { font-family: Arial, sans-serif; text-align: center; background-color: #f4f4f9; color: #333; }
-            .container { max-width: 800px; margin: 0 auto; background: white; padding: 20px; box-shadow: 0 0 10px rgba(0,0,0,0.1); mt-5}
+            body { font-family: Arial, sans-serif; background-color: #f4f4f9; color: #333; margin: 0; padding: 20px; }
+            .header { text-align: center; margin-bottom: 30px; }
             h1 { color: #0056b3; }
-            img { max-width: 100%; height: auto; border: 1px solid #ddd; }
-            .status { font-weight: bold; color: #d9534f; }
+            .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 20px; max-width: 1200px; margin: 0 auto; }
+            .card { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); text-align: center; }
+            img { max-width: 100%; border-radius: 5px; margin-top: 15px; border: 1px solid #ddd; }
+            .status { font-size: 0.9em; color: #d9534f; padding: 8px; background-color: #ffeeba; border-radius: 5px; margin-top: 10px; }
         </style>
     </head>
     <body>
-        <div class="container">
-            <h1>❄️ Otonom Buzul İzleme Raporu</h1>
-            <p><strong>Son Güncelleme:</strong> 10 March 2026</p>
-            <p class="status">Sistem Durumu: API Taraması Başarılı, Son Görüntü İşlendi.</p>
-            <h2>Buzul Doluluk Oranı: %28.58</h2>
-            <img src="analiz_sonucu.png" alt="Günlük Analiz Çıktısı">
-            <p><small>Bu sayfa GitHub Actions ile otomatik olarak güncellenmektedir.</small></p>
+        <div class="header">
+            <h1>🛰️ Antarktika Kritik Buzullar İzleme Raporu</h1>
+            <p><strong>Son Güncelleme:</strong> 10 March 2026 - 09:16 (UTC)</p>
+            <p><small>Veriler Copernicus Data Space Ecosystem API ile otonom olarak çekilmektedir.</small></p>
+        </div>
+        <div class="grid-container">
+    
+            <div class="card">
+                <h3>Thwaites (Kıyamet) Buzulu</h3>
+                <h2>Buzul Oranı: %28.58</h2>
+                <div class="status">☁️ Son 3 günde bulutsuz veri bulunamadı. Önceki analiz geçerli.</div>
+                <img src="thwaites_analiz.png" alt="Thwaites (Kıyamet) Buzulu Analizi">
+            </div>
+        
+            <div class="card">
+                <h3>Pine Island Buzulu</h3>
+                <h2>Buzul Oranı: %28.58</h2>
+                <div class="status">☁️ Son 3 günde bulutsuz veri bulunamadı. Önceki analiz geçerli.</div>
+                <img src="pine_analiz.png" alt="Pine Island Buzulu Analizi">
+            </div>
+        
+            <div class="card">
+                <h3>Totten Buzulu</h3>
+                <h2>Buzul Oranı: %28.58</h2>
+                <div class="status">☁️ Son 3 günde bulutsuz veri bulunamadı. Önceki analiz geçerli.</div>
+                <img src="totten_analiz.png" alt="Totten Buzulu Analizi">
+            </div>
+        
         </div>
     </body>
     </html>
