@@ -2,8 +2,12 @@ name: Gunluk Buzul Analizi
 
 on:
   schedule:
-    - cron: '0 8 * * *' # Her gün sabah saat 08:00'da (UTC) otomatik çalıştır
-  workflow_dispatch: # GitHub üzerinden manuel tetikleme butonu ekler
+    - cron: '0 8 * * *'
+  workflow_dispatch:
+
+# İŞTE SİHRİ BURASI YAPIYOR: Sisteme yazma yetkisini zorla veriyoruz
+permissions:
+  contents: write 
 
 jobs:
   analiz_et_ve_yayinla:
@@ -27,10 +31,10 @@ jobs:
           COPERNICUS_PASSWORD: ${{ secrets.COPERNICUS_PASSWORD }}
         run: python ajan_kodu.py
 
-      - name: Sonuçları (HTML ve PNG) GitHub'a Geri Kaydet
+      - name: Sonuçları GitHub'a Kaydet
         run: |
-          git config --global user.name 'Otomatik Ajan'
-          git config --global user.email 'ajan@buzulprojesi.com'
-          git add .
-          git commit -m "Günlük Rapor Güncellendi" || echo "Değişiklik yok"
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git diff-index --quiet HEAD || git commit -m "Analiz raporu güncellendi"
           git push
