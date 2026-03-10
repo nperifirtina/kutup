@@ -1,0 +1,5 @@
+sentinelsat
+opencv-python-headless
+pandas
+numpy
+matplotlib
