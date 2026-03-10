@@ -1,0 +1,36 @@
+name: Gunluk Buzul Analizi
+
+on:
+  schedule:
+    - cron: '0 8 * * *' # Her gün sabah saat 08:00'da (UTC) otomatik çalıştır
+  workflow_dispatch: # GitHub üzerinden manuel tetikleme butonu ekler
+
+jobs:
+  analiz_et_ve_yayinla:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Depoyu Sunucuya Çek
+        uses: actions/checkout@v3
+
+      - name: Python Ortamını Kur
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Gerekli Kütüphaneleri Yükle
+        run: pip install -r requirements.txt
+
+      - name: Ajan Kodunu (Yapay Zekayı) Çalıştır
+        env:
+          COPERNICUS_USER: ${{ secrets.COPERNICUS_USER }}
+          COPERNICUS_PASSWORD: ${{ secrets.COPERNICUS_PASSWORD }}
+        run: python ajan_kodu.py
+
+      - name: Sonuçları (HTML ve PNG) GitHub'a Geri Kaydet
+        run: |
+          git config --global user.name 'Otomatik Ajan'
+          git config --global user.email 'ajan@buzulprojesi.com'
+          git add index.html analiz_sonucu.png
+          git commit -m "Günlük Rapor Güncellendi" || echo "Değişiklik yok"
+          git push
