@@ -6,8 +6,8 @@ import matplotlib.pyplot as plt
 from datetime import datetime, timedelta
 
 # --- 1. GÜVENLİK VE AYARLAR ---
-KULLANICI_ADI = os.environ.get('nperifirtina@gmail.com')
-SIFRE = os.environ.get('NezihaPri.Fırtına2011')
+KULLANICI_ADI = os.environ.get('COPERNICUS_USER')
+SIFRE = os.environ.get('COPERNICUS_PASSWORD')
 
 # Dünyanın En Kritik 3 Buzulunun Koordinatları ve B Planı (Fail-Safe) Resimleri
 KRITIK_BUZULLAR = {
